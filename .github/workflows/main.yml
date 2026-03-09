@@ -1,0 +1,22 @@
+name: Copy Docker Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install crane
+        run: |
+          curl -L https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz | tar xz
+          sudo mv crane /usr/local/bin/
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GHCR_TOKEN }}" | crane auth login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Copy image
+        run: |
+          crane copy docker.io/zeyepapillon/papillon-ai-worker:latest ghcr.io/${{ github.repository_owner }}/papillon-ai-worker:latest
