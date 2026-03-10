@@ -1,10 +1,8 @@
 name: Copy Docker Image
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  repository_dispatch:
+    types: [update-worker]
 
 jobs:
   copy:
@@ -22,4 +20,4 @@ jobs:
 
       - name: Copy image
         run: |
-          crane copy docker.io/zeyepapillon/papillon-ai-worker:latest ghcr.io/${{ github.repository_owner }}/papillon-ai-worker:latest
+          crane copy docker.io/zeyepapillon/papillon-ai-worker:latest ghcr.io/zeyeteam-debug/papillon-ai-worker:latest
