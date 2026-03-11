@@ -21,10 +21,3 @@ jobs:
       - name: Copy image
         run: |
           crane copy docker.io/zeyepapillon/papillon-ai-worker:latest ghcr.io/zeyeteam-debug/papillon-ai-worker:latest
-          - name: Trigger worker repo
-        run: |
-          curl -X POST \
-          -H "Authorization: token ${{ secrets.GHCR_TOKEN }}" \
-          -H "Accept: application/vnd.github+json" \
-          https://api.github.com/repos/zeyeteam-debug/papillon-ai-worker/dispatches \
-          -d '{"event_type":"update_worker"}'
